@@ -63,7 +63,7 @@ class NotificationUpdateInput {
   @Field(() => EnumNotificationStatus, {
     nullable: true,
   })
-  status?: "Option1" | null;
+  status?: "Waiting" | "Sent" | "Canceled" | null;
 
   @ApiProperty({
     required: false,

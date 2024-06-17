@@ -7,6 +7,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Recipient {
+  contactInfo               String?
+  createdAt                 DateTime       @default(now())
+  firstName                 String?
+  id                        String         @id @default(auto()) @map("_id") @db.ObjectId
+  lastName                  String?
+  notifications             Notification[]
+  preferredNotificationType String?
+  updatedAt                 DateTime       @updatedAt
+}
+
 model Notification {
   createdAt          DateTime                @default(now())
   id                 String                  @id @default(auto()) @map("_id") @db.ObjectId
@@ -20,17 +31,6 @@ model Notification {
   updatedAt          DateTime                @updatedAt
 }
 
-model Recipient {
-  contactInfo               String?
-  createdAt                 DateTime       @default(now())
-  firstName                 String?
-  id                        String         @id @default(auto()) @map("_id") @db.ObjectId
-  lastName                  String?
-  notifications             Notification[]
-  preferredNotificationType String?
-  updatedAt                 DateTime       @updatedAt
-}
-
 model NotificationType {
   createdAt     DateTime       @default(now())
   description   String?
@@ -41,5 +41,7 @@ model NotificationType {
 }
 
 enum EnumNotificationStatus {
-  Option1
+  Waiting
+  Sent
+  Canceled
 }
