@@ -1,0 +1,45 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Notification {
+  createdAt          DateTime                @default(now())
+  id                 String                  @id @default(auto()) @map("_id") @db.ObjectId
+  message            String?
+  notificationType   NotificationType?       @relation(fields: [notificationTypeId], references: [id])
+  notificationTypeId String?                 @db.ObjectId
+  recipient          Recipient?              @relation(fields: [recipientId], references: [id])
+  recipientId        String?                 @db.ObjectId
+  status             EnumNotificationStatus?
+  title              String?
+  updatedAt          DateTime                @updatedAt
+}
+
+model Recipient {
+  contactInfo               String?
+  createdAt                 DateTime       @default(now())
+  firstName                 String?
+  id                        String         @id @default(auto()) @map("_id") @db.ObjectId
+  lastName                  String?
+  notifications             Notification[]
+  preferredNotificationType String?
+  updatedAt                 DateTime       @updatedAt
+}
+
+model NotificationType {
+  createdAt     DateTime       @default(now())
+  description   String?
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  notifications Notification[]
+  updatedAt     DateTime       @updatedAt
+}
+
+enum EnumNotificationStatus {
+  Option1
+}
