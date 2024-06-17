@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { NotificationModule } from "./notification/notification.module";
 import { RecipientModule } from "./recipient/recipient.module";
+import { NotificationModule } from "./notification/notification.module";
 import { NotificationTypeModule } from "./notificationType/notificationType.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
@@ -12,8 +12,8 @@ import { ConfigModule } from "@nestjs/config";
 @Module({
   controllers: [],
   imports: [
-    NotificationModule,
     RecipientModule,
+    NotificationModule,
     NotificationTypeModule,
     HealthModule,
     PrismaModule,

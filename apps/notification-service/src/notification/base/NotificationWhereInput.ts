@@ -76,7 +76,7 @@ class NotificationWhereInput {
   @Field(() => EnumNotificationStatus, {
     nullable: true,
   })
-  status?: "Option1";
+  status?: "Waiting" | "Sent" | "Canceled";
 
   @ApiProperty({
     required: false,
