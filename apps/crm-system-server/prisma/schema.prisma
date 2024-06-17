@@ -1,0 +1,65 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model MembershipType {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(cuid())
+  members     Member[]
+  name        String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Event {
+  createdAt   DateTime  @default(now())
+  date        DateTime?
+  description String?
+  fee         Float?
+  id          String    @id @default(cuid())
+  tickets     Ticket[]
+  title       String?
+  updatedAt   DateTime  @updatedAt
+}
+
+model Member {
+  comment          String
+  createdAt        DateTime        @default(now())
+  email            String          @unique
+  firstName        String
+  id               String          @id @default(cuid())
+  lastName         String
+  membershipType   MembershipType? @relation(fields: [membershipTypeId], references: [id])
+  membershipTypeId String?
+  tickets          Ticket[]
+  updatedAt        DateTime        @updatedAt
+}
+
+model Ticket {
+  createdAt    DateTime  @default(now())
+  event        Event?    @relation(fields: [eventId], references: [id])
+  eventId      String?
+  id           String    @id @default(cuid())
+  member       Member?   @relation(fields: [memberId], references: [id])
+  memberId     String?
+  purchaseDate DateTime?
+  ticketNumber String?
+  updatedAt    DateTime  @updatedAt
+}
